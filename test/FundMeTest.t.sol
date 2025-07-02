@@ -6,15 +6,16 @@ import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interf
 
 import {Test, console} from "forge-std/Test.sol";
 import {FundMe} from "../src/FundMe.sol";
+import {DeployFundMe} from "../script/DeployFundMe.s.sol";
 
 contract FundMeTest is Test {
     FundMe fundMe;
 
     function setUp() external {
-        // me -> FundMeTest -> FundMe
-        // so : Owner of FundMe = FundMeTest
-        // and : Owner of FundMeTest = me
-        fundMe = new FundMe();
+        // FundMe fundMe = new FundMe(0x694AA1769357215DE4FAC081bf1f309aDC325306);
+
+        DeployFundMe deployFundMe = new DeployFundMe();
+        fundMe = deployFundMe.run();
     }
 
     function testMinimumDollarIsFive() public view {
@@ -23,7 +24,7 @@ contract FundMeTest is Test {
 
     function testOwnerIsMessageSender() public view {
         console.log("address(this)", address(this));
-        assertEq(fundMe.i_owner(), address(this));
+        assertEq(fundMe.i_owner(), msg.sender);
     }
 
     function testPriceFeedVersionIsAccurate() public view {

@@ -30,6 +30,7 @@ forge test --match-test testPriceFeedVersionIsAccurate -vvv # this would fail be
 source .env
 # it will pretend to work on the sepolia chain instead of anvilTest
 forge test --match-test testPriceFeedVersionIsAccurate -vvvv --fork-url $SEPOLIA_RPC_URL # it failed,unexpectedly
+forge test --fork-url $SEPOLIA_RPC_URL
 # we can see how much lines code we actually run,did we success or fail
 forge coverage --fork-url $SEPOLIA_RPC_URL
 ```
